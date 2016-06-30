@@ -15,7 +15,9 @@ import java.util.List;
  * @author pvr
  */
 public interface RecordManager {
-   public void createRecordItem(RecordItem item, InputStream content) throws IOException;
+    public void createRecordItem(RecordItem item, InputStream content) throws IOException;
+    
+    public void insertNewRecordItem(RecordItem item) throws IOException;
     
     public RecordItem getRecordItem(String id) throws FileNotFoundException ;
     
@@ -24,4 +26,5 @@ public interface RecordManager {
     public void deleteRecordItem(String id) throws FileNotFoundException;
     
     public List<RecordGroup> listRecordItems(RecordQualifier filter) throws FileNotFoundException;    
+        
 }

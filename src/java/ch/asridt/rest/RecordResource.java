@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -118,6 +119,23 @@ public class RecordResource {
             logger.log(Level.SEVERE, "FileRecordManager failed to access file: " + fileName, ex);
             responseBuilder = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
         }
+        return responseBuilder.build();
+    }
+    
+    @POST
+    @Path("{recordId}")
+    public Response insertRecordItem(@PathParam("recordId") String recordId, RecordItem item){
+        // response
+        ResponseBuilder responseBuilder;
+        try {
+            // try insertion
+            fmm.getRecordManager().insertNewRecordItem(item);
+            responseBuilder = Response.ok("Uploaded item with id: " + recordId);
+        } catch (IOException ex) {
+            logger.log(Level.SEVERE, "FileRecordManager failed to access item with id: " + recordId, ex);
+            responseBuilder = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
+        }
+        
         return responseBuilder.build();
     }
 }

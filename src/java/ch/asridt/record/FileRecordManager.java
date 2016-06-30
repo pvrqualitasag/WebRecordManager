@@ -58,6 +58,12 @@ public class FileRecordManager implements RecordManager{
     }
 
     @Override
+    public void insertNewRecordItem(RecordItem item) throws IOException {
+        Files.write(Paths.get(dir + "/" + item.getId()), item.toTsv().getBytes());
+        
+    }
+
+    @Override
     public void createRecordItem(RecordItem item, InputStream content) throws IOException {
         File f = new File(dir, item.getId());
         String realId = generateRecordId(f);
